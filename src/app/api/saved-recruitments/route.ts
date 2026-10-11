@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getRecruitmentsByIds } from '@/features/recruitments/service/recruitmentService';
+import { RECRUITMENT_CATALOG_ENABLED } from '@/shared/config/site';
 
 /**
  * 관심 공고 목록 (BFF).
@@ -8,6 +9,8 @@ import { getRecruitmentsByIds } from '@/features/recruitments/service/recruitmen
  * W4에서 세션 쿠키가 생기면 `ids` 없이 서버의 `GET /me/saved-recruitments`를 중계하도록 바꾼다.
  */
 export async function GET(request: Request) {
+  if (!RECRUITMENT_CATALOG_ENABLED) return NextResponse.json({ items: [] }, { status: 404 });
+
   const idsParam = new URL(request.url).searchParams.get('ids') ?? '';
   const ids = idsParam
     .split(',')

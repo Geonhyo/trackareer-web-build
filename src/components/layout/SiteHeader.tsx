@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { useSession } from '@/features/auth/ui/SessionProvider';
+import { RECRUITMENT_CATALOG_ENABLED } from '@/shared/config/site';
 import { Wordmark } from './Wordmark';
 import styles from './SiteHeader.module.css';
 
@@ -34,43 +35,47 @@ export function SiteHeader() {
         <Wordmark className={styles.wm} />
       </Link>
 
-      <nav className={`${styles.nav} ${menuOpen ? styles.open : ''}`}>
-        {NAV_ITEMS.map((item) => (
-          <Link
-            key={item.href}
-            href={item.href}
-            aria-current={isCurrent(item.href) ? 'page' : undefined}
+      {RECRUITMENT_CATALOG_ENABLED ? (
+        <>
+          <nav className={`${styles.nav} ${menuOpen ? styles.open : ''}`}>
+            {NAV_ITEMS.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                aria-current={isCurrent(item.href) ? 'page' : undefined}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+
+          <div className={styles.right}>
+            {status === 'authenticated' && user ? (
+              <>
+                <span className={styles.who}>{user.nickname}님</span>
+                <button type="button" className={styles.ghost} onClick={() => void signOut()}>
+                  로그아웃
+                </button>
+              </>
+            ) : null}
+            {status === 'unauthenticated' ? (
+              <Link href="/login" className={styles.login}>
+                로그인
+              </Link>
+            ) : null}
+          </div>
+
+          <button
+            type="button"
+            className={styles.menuBtn}
+            aria-label="메뉴"
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen((open) => !open)}
           >
-            {item.label}
-          </Link>
-        ))}
-      </nav>
-
-      <div className={styles.right}>
-        {status === 'authenticated' && user ? (
-          <>
-            <span className={styles.who}>{user.nickname}님</span>
-            <button type="button" className={styles.ghost} onClick={() => void signOut()}>
-              로그아웃
-            </button>
-          </>
-        ) : null}
-        {status === 'unauthenticated' ? (
-          <Link href="/login" className={styles.login}>
-            로그인
-          </Link>
-        ) : null}
-      </div>
-
-      <button
-        type="button"
-        className={styles.menuBtn}
-        aria-label="메뉴"
-        aria-expanded={menuOpen}
-        onClick={() => setMenuOpen((open) => !open)}
-      >
-        ☰
-      </button>
+            ☰
+          </button>
+        </>
+      ) : null}
     </header>
   );
 }

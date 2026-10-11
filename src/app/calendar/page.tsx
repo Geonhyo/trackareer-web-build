@@ -1,7 +1,9 @@
 import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 import { DeadlineCalendar } from '@/features/calendar/ui/DeadlineCalendar';
 import { getCalendarRecruitments } from '@/features/recruitments/service/recruitmentService';
 import { toDateKey, todayInSeoul } from '@/shared/lib/date';
+import { RECRUITMENT_CATALOG_ENABLED } from '@/shared/config/site';
 
 export const metadata: Metadata = {
   title: '마감 캘린더',
@@ -14,6 +16,7 @@ interface PageProps {
 }
 
 export default async function CalendarPage({ searchParams }: PageProps) {
+  if (!RECRUITMENT_CATALOG_ENABLED) notFound();
   const params = await searchParams;
   const today = todayInSeoul();
 

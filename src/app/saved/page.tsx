@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 import { SavedRecruitmentList } from './SavedRecruitmentList';
+import { RECRUITMENT_CATALOG_ENABLED } from '@/shared/config/site';
 
 export const metadata: Metadata = {
   title: '관심 공고',
@@ -9,6 +11,7 @@ export const metadata: Metadata = {
 };
 
 export default function SavedPage() {
+  if (!RECRUITMENT_CATALOG_ENABLED) notFound();
   return (
     <div className="gutter">
       <section className="sec" style={{ paddingBottom: 'var(--x12)' }}>

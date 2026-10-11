@@ -1,4 +1,6 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
+import { AppDownload, APP_DOWNLOAD_LEDE } from '@/features/app-download/ui/AppDownload';
 import { BannerCarousel } from '@/features/recruitments/ui/BannerCarousel';
 import { JobCategoryFilter } from '@/features/recruitments/ui/JobCategoryFilter';
 import { RecruitmentCard } from '@/features/recruitments/ui/RecruitmentCard';
@@ -11,10 +13,19 @@ import {
   getRecruitments,
 } from '@/features/recruitments/service/recruitmentService';
 import { getDdayLabel } from '@/shared/lib/date';
-import { CONTACT_EMAIL } from '@/shared/config/site';
+import { CONTACT_EMAIL, RECRUITMENT_CATALOG_ENABLED, SITE_NAME } from '@/shared/config/site';
 import styles from './page.module.css';
 
 const BANNER_FEATURED_LIMIT = 3;
+
+/** 공고 화면이 꺼져 있으면 홈은 앱 소개라 제목·설명도 앱 기준으로 바꾼다 */
+export const metadata: Metadata | undefined = RECRUITMENT_CATALOG_ENABLED
+  ? undefined
+  : {
+      title: { absolute: `${SITE_NAME} | 취준 일정 관리 앱` },
+      description: APP_DOWNLOAD_LEDE,
+      openGraph: { title: `${SITE_NAME} | 취준 일정 관리 앱`, description: APP_DOWNLOAD_LEDE },
+    };
 
 interface PageProps {
   searchParams: Promise<{ jobs?: string; page?: string }>;
@@ -35,6 +46,8 @@ const buildHref = (jobs: number[], page: number): string => {
 };
 
 export default async function RecruitmentListPage({ searchParams }: PageProps) {
+  if (!RECRUITMENT_CATALOG_ENABLED) return <AppDownload />;
+
   const params = await searchParams;
   const jobCategoryIds = parseIds(params.jobs);
   const page = Math.max(1, Number(params.page) || 1);
