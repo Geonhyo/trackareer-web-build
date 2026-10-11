@@ -4,7 +4,7 @@ import { privacyMarketing } from './privacyMarketing';
 import { privacyPolicy } from './privacyPolicy';
 import { termsOfService } from './termsOfService';
 
-/** 표시·링크 순서. 경로 `/docs/{slug}`는 앱 env(약관 4종 URL)가 그대로 가리키므로 slug를 바꾸지 않는다. */
+/** 표시 · 링크 순서. 경로 `/docs/{slug}`는 앱 env(약관 4종 URL)가 그대로 가리키므로 slug를 바꾸지 않는다. */
 export const LEGAL_DOCS: LegalDoc[] = [
   termsOfService,
   privacyPolicy,

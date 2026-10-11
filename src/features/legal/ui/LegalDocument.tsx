@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { LEGAL_DOCS, legalDocPath } from '../content';
-import type { LegalBlock, LegalDoc, LegalList } from '../model/types';
+import type { LegalBlock, LegalDoc, LegalList, LegalTable } from '../model/types';
 import styles from './LegalDocument.module.css';
 
 /** `**굵게**`와 `[글자](URL)`만 해석한다. 그 밖의 마크다운은 글자 그대로 둔다. */
@@ -53,6 +53,35 @@ function List({ list }: { list: LegalList }) {
   );
 }
 
+function Table({ table }: { table: LegalTable }) {
+  return (
+    <div className={styles.tableWrap}>
+      <table className={styles.table}>
+        <thead>
+          <tr>
+            {table.head.map((cell) => (
+              <th key={cell} scope="col">
+                {cell}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {table.rows.map((row, i) => (
+            <tr key={i}>
+              {row.map((cell, j) => (
+                <td key={j}>
+                  <LegalText text={cell} />
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
 function Block({ block }: { block: LegalBlock }) {
   switch (block.type) {
     case 'h2':
@@ -65,6 +94,8 @@ function Block({ block }: { block: LegalBlock }) {
           <LegalText text={block.text} />
         </p>
       );
+    case 'table':
+      return <Table table={block} />;
     default:
       return <List list={block} />;
   }
