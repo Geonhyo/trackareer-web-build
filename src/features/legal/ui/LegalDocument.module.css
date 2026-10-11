@@ -1,7 +1,7 @@
 .page {
-  max-width: 720px;
+  max-width: calc(760px + var(--side-pad) * 2);
   margin: 0 auto;
-  padding: var(--x10) var(--x6) var(--x14);
+  padding: var(--x12) var(--side-pad) 0;
   display: flex;
   flex-direction: column;
   gap: var(--x8);
@@ -15,8 +15,8 @@
   border-bottom: 1px solid var(--stroke-muted);
 }
 .head h1 {
-  font-size: var(--t9);
-  line-height: var(--lh9);
+  font-size: var(--t11);
+  line-height: var(--lh11);
   font-weight: var(--bold);
   letter-spacing: -0.03em;
 }
@@ -27,22 +27,22 @@
 }
 
 .body {
-  font-size: var(--t4);
-  line-height: var(--lh6);
+  font-size: 15px;
+  line-height: 1.75;
   color: var(--fg-neutral);
   word-break: keep-all;
   overflow-wrap: anywhere;
 }
 .body h2 {
   margin-top: var(--x10);
-  font-size: var(--t6);
+  font-size: var(--t7);
   line-height: var(--lh7);
   font-weight: var(--bold);
 }
 .body h3 {
   margin-top: var(--x6);
   font-size: var(--t5);
-  line-height: var(--lh6);
+  line-height: var(--lh7);
   font-weight: var(--bold);
 }
 .body h2 + h3 {
@@ -102,24 +102,38 @@
   border-top: 1px solid var(--stroke-muted);
 }
 .others a {
-  border: 1px solid var(--stroke);
+  border: 1px solid var(--stroke-muted);
   border-radius: var(--rfull);
-  padding: var(--x1_5) var(--x3);
-  font-size: var(--t3);
+  padding: var(--x2) var(--x4);
+  font-size: var(--t4);
   line-height: var(--lh5);
+  font-weight: var(--medium);
   color: var(--fg-muted);
 }
 .others a:hover {
-  background: var(--bg-basement);
-  color: var(--fg-neutral);
+  border-color: var(--brand-weak-hover);
+  background: var(--brand-weak);
+  color: var(--fg-brand);
 }
 
 @media (max-width: 760px) {
   .page {
-    padding: var(--x8) var(--x4) var(--x12);
+    padding-top: var(--x8);
+    gap: var(--x6);
+  }
+  .head {
+    padding-bottom: var(--x5);
   }
   .head h1 {
-    font-size: var(--t8);
-    line-height: var(--lh8);
+    font-size: var(--t9);
+    line-height: var(--lh9);
+  }
+  .body h2 {
+    margin-top: var(--x8);
+    font-size: var(--t6);
+  }
+  .ol,
+  .ul {
+    padding-left: var(--x5);
   }
 }

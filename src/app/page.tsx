@@ -13,7 +13,12 @@ import {
   getRecruitments,
 } from '@/features/recruitments/service/recruitmentService';
 import { getDdayLabel } from '@/shared/lib/date';
-import { BUSINESS_EMAIL, RECRUITMENT_CATALOG_ENABLED, SITE_NAME } from '@/shared/config/site';
+import {
+  BUSINESS_EMAIL,
+  OG_IMAGE,
+  RECRUITMENT_CATALOG_ENABLED,
+  SITE_NAME,
+} from '@/shared/config/site';
 import styles from './page.module.css';
 
 const BANNER_FEATURED_LIMIT = 3;
@@ -24,7 +29,11 @@ export const metadata: Metadata | undefined = RECRUITMENT_CATALOG_ENABLED
   : {
       title: { absolute: `${SITE_NAME} | 취준 일정 관리 앱` },
       description: APP_DOWNLOAD_LEDE,
-      openGraph: { title: `${SITE_NAME} | 취준 일정 관리 앱`, description: APP_DOWNLOAD_LEDE },
+      openGraph: {
+        title: `${SITE_NAME} | 취준 일정 관리 앱`,
+        description: APP_DOWNLOAD_LEDE,
+        images: [OG_IMAGE],
+      },
     };
 
 interface PageProps {

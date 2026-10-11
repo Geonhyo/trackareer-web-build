@@ -1,26 +1,29 @@
 .hdr {
-  background: var(--ink);
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: saturate(180%) blur(12px);
+  -webkit-backdrop-filter: saturate(180%) blur(12px);
+  border-bottom: 1px solid var(--stroke-muted);
   height: var(--header-h);
   display: flex;
   align-items: center;
   gap: var(--x6);
-  padding: 0 var(--x7);
+  padding: 0 var(--side-pad);
   position: sticky;
   top: 0;
   z-index: 40;
 }
 
-.wm {
-  color: var(--fg-white);
-  font-size: var(--t6);
-  line-height: var(--lh6);
-  font-weight: var(--bold);
-  letter-spacing: -0.035em;
-  white-space: nowrap;
+.home {
+  display: flex;
+  align-items: center;
+  /* 로고 주변까지 눌리게 해 터치 영역을 넓힌다 */
+  padding: var(--x2) 0;
 }
-.wm i {
-  font-style: normal;
-  color: var(--brand-on-dark);
+.logo {
+  display: block;
+  height: 26px;
+  width: auto;
+  color: var(--ink);
 }
 
 .nav {
@@ -29,7 +32,7 @@
   margin-left: auto;
 }
 .nav a {
-  color: #c3c6cc;
+  color: var(--fg-muted);
   font-size: var(--t4);
   line-height: var(--lh5);
   font-weight: var(--medium);
@@ -37,12 +40,12 @@
   border-radius: var(--rfull);
 }
 .nav a:hover {
-  color: var(--fg-white);
-  background: rgba(255, 255, 255, 0.08);
+  color: var(--fg-neutral);
+  background: var(--bg-neutral-weak);
 }
 .nav a[aria-current='page'] {
-  color: var(--fg-white);
-  background: rgba(255, 255, 255, 0.14);
+  color: var(--fg-brand);
+  background: var(--brand-weak);
   font-weight: var(--bold);
 }
 
@@ -61,12 +64,12 @@
   font-size: var(--t3);
   line-height: var(--lh3);
   font-weight: var(--medium);
-  color: #c3c6cc;
+  color: var(--fg-muted);
   white-space: nowrap;
 }
 .ghost:hover {
-  background: rgba(255, 255, 255, 0.1);
-  color: var(--fg-white);
+  background: var(--bg-neutral-weak);
+  color: var(--fg-neutral);
 }
 
 .login {
@@ -84,14 +87,14 @@
 }
 
 .who {
-  color: #c3c6cc;
+  color: var(--fg-muted);
   font-size: var(--t3);
   white-space: nowrap;
 }
 
 .menuBtn {
   display: none;
-  color: var(--fg-white);
+  color: var(--fg-neutral);
   font-size: var(--t7);
   line-height: 1;
   padding: var(--x1);
@@ -99,15 +102,19 @@
 
 @media (max-width: 880px) {
   .hdr {
-    padding: 0 var(--x4);
     gap: 0;
+  }
+  .logo {
+    height: 22px;
   }
   .nav {
     position: absolute;
     left: 0;
     right: 0;
     top: var(--header-h);
-    background: var(--ink);
+    background: var(--bg-default);
+    border-bottom: 1px solid var(--stroke-muted);
+    box-shadow: var(--shadow-2);
     flex-direction: column;
     padding: var(--x2);
     display: none;

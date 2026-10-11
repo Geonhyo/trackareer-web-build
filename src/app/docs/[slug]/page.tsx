@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getLegalDoc, LEGAL_DOCS, legalDocPath } from '@/features/legal/content';
 import { LegalDocument } from '@/features/legal/ui/LegalDocument';
-import { SITE_NAME } from '@/shared/config/site';
+import { OG_IMAGE, SITE_NAME } from '@/shared/config/site';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -31,6 +31,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       siteName: SITE_NAME,
       title: `${doc.title} | ${SITE_NAME}`,
       description: doc.description,
+      images: [OG_IMAGE],
     },
   };
 }

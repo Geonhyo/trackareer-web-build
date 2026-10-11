@@ -1,10 +1,11 @@
-import { Wordmark } from '@/components/layout/Wordmark';
+import Image from 'next/image';
 import {
   ANDROID_WAITLIST_FORM_URL,
   APP_STORE_URL,
   PLAY_STORE_URL,
   RECRUITMENT_CATALOG_ENABLED,
 } from '@/shared/config/site';
+import appIcon from '../assets/app-icon.png';
 import styles from './AppDownload.module.css';
 
 /** 웹 공고 저장이 꺼져 있을 때는 웹 → 앱 연동을 말하지 않는다 */
@@ -67,13 +68,13 @@ function BellIcon() {
 export function AppDownload() {
   return (
     <div className={styles.page}>
-      <Wordmark className={styles.wm} />
+      <Image src={appIcon} alt="트래커리어 앱 아이콘" className={styles.appIcon} priority />
       <h1>앱에서 트래커리어를 시작하세요</h1>
       <p className={styles.lede}>{APP_DOWNLOAD_LEDE}</p>
 
       <div className={styles.buttons}>
         <a
-          className={`${styles.store} ${styles.primary}`}
+          className={`btnLg brand ${styles.store}`}
           href={APP_STORE_URL}
           target="_blank"
           rel="noopener noreferrer"
@@ -82,7 +83,7 @@ export function AppDownload() {
           App Store
         </a>
         <a
-          className={`${styles.store} ${styles.secondary}`}
+          className={`btnLg ghost ${styles.store}`}
           href={isPlayStoreReleased ? PLAY_STORE_URL : ANDROID_WAITLIST_FORM_URL}
           target="_blank"
           rel="noopener noreferrer"
