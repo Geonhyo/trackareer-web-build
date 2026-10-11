@@ -1,0 +1,312 @@
+.bar {
+  display: flex;
+  align-items: center;
+  gap: var(--x3);
+  flex-wrap: wrap;
+  margin-bottom: var(--x5);
+}
+.monthnav {
+  display: flex;
+  align-items: center;
+  gap: var(--x2);
+}
+.mm {
+  font-size: var(--t7);
+  line-height: var(--lh7);
+  font-weight: var(--bold);
+  letter-spacing: -0.03em;
+  min-width: 122px;
+  text-align: center;
+}
+.arw {
+  border-radius: var(--rfull);
+  width: 32px;
+  height: 32px;
+  color: var(--fg-muted);
+  background: var(--bg-neutral-weak);
+  /* a 태그는 기본이 inline이라 width/height가 먹지 않는다 */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--t5);
+  line-height: 1;
+}
+.arw:hover {
+  background: var(--bg-neutral-weak-hover);
+  color: var(--fg-neutral);
+}
+
+.seg {
+  margin-left: auto;
+  display: inline-flex;
+  background: var(--bg-neutral-weak);
+  border-radius: var(--rfull);
+  padding: var(--x1);
+}
+.seg button {
+  padding: var(--x1_5) var(--x4);
+  font-size: var(--t3);
+  line-height: var(--lh3);
+  font-weight: var(--medium);
+  color: var(--fg-muted);
+  border-radius: var(--rfull);
+}
+.seg button[aria-pressed='true'] {
+  background: var(--bg-default);
+  color: var(--fg-brand);
+  font-weight: var(--bold);
+  box-shadow: var(--shadow-1);
+}
+
+.wrap {
+  border: 1px solid var(--stroke-muted);
+  border-radius: var(--r4);
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 312px;
+}
+.grid {
+  border-right: 1px solid var(--stroke-muted);
+}
+
+.dow {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  background: var(--bg-basement);
+}
+.dow div {
+  padding: var(--x2_5) 0;
+  text-align: center;
+  font-size: var(--t2);
+  line-height: var(--lh2);
+  font-weight: var(--bold);
+  color: var(--fg-muted);
+}
+.dow div:first-child {
+  color: var(--fg-critical);
+}
+
+.days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+.day {
+  min-height: 104px;
+  border-top: 1px solid var(--stroke-muted);
+  border-right: 1px solid var(--stroke-muted);
+  padding: var(--x1_5);
+  text-align: left;
+  background: var(--bg-default);
+  overflow: hidden;
+}
+.day:nth-child(7n) {
+  border-right: 0;
+}
+.day:hover {
+  background: var(--bg-basement);
+}
+.day.out .dnum {
+  color: var(--gray300);
+}
+.dnum {
+  font-size: var(--t3);
+  line-height: 22px;
+  font-weight: var(--medium);
+  color: var(--fg-muted);
+  display: inline-block;
+  min-width: 22px;
+  height: 22px;
+  text-align: center;
+  border-radius: var(--rfull);
+}
+.day.today .dnum {
+  background: var(--gray900);
+  color: var(--fg-white);
+  font-weight: var(--bold);
+}
+.day.selected {
+  background: var(--brand-weak);
+  box-shadow: inset 0 0 0 2px var(--brand-solid);
+}
+.day.selected .dnum {
+  color: var(--fg-brand);
+  font-weight: var(--bold);
+}
+.day.selected.today .dnum {
+  background: var(--brand-solid);
+  color: var(--fg-white);
+}
+
+.ev {
+  display: flex;
+  align-items: center;
+  gap: var(--x1);
+  font-size: var(--t1);
+  line-height: var(--lh2);
+  margin-top: var(--x1);
+  font-weight: var(--medium);
+  color: var(--fg-neutral);
+}
+.dot {
+  width: 5px;
+  height: 5px;
+  border-radius: var(--rfull);
+  background: var(--brand-solid);
+  flex: 0 0 5px;
+}
+.evName {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ev.urgent .dot {
+  background: var(--critical-solid);
+}
+.ev.past {
+  color: var(--fg-subtle);
+  font-weight: var(--regular);
+}
+.ev.past .dot {
+  background: var(--gray300);
+}
+.ev.past .evName {
+  text-decoration: line-through;
+  text-decoration-color: var(--gray300);
+}
+.evmore {
+  display: block;
+  font-size: var(--t1);
+  color: var(--fg-subtle);
+  margin-top: var(--x1);
+  padding-left: var(--x2_5);
+  font-weight: var(--medium);
+}
+
+.panel {
+  padding: var(--x6) var(--x5) var(--x8);
+}
+.panelDate {
+  font-size: var(--t5);
+  line-height: var(--lh6);
+  font-weight: var(--bold);
+}
+.panelSub {
+  font-size: var(--t2);
+  line-height: var(--lh3);
+  color: var(--fg-subtle);
+  font-weight: var(--medium);
+  margin-top: var(--x1);
+  margin-bottom: var(--x5);
+}
+.item {
+  display: grid;
+  grid-template-columns: 46px minmax(0, 1fr);
+  gap: 0 var(--x3_5);
+  align-items: center;
+  padding: var(--x3);
+  margin: 0 calc(var(--x3) * -1);
+  border-radius: var(--r3);
+}
+.item:hover {
+  background: var(--bg-basement);
+}
+.mini {
+  width: 46px;
+  height: 32px;
+  border-radius: var(--r1_5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9.5px;
+  line-height: 1.15;
+  font-weight: var(--bold);
+  text-align: center;
+  padding: 2px;
+  overflow: hidden;
+}
+.time {
+  font-size: var(--t1);
+  line-height: var(--lh1);
+  font-weight: var(--bold);
+  color: var(--fg-brand);
+}
+.time.none {
+  color: var(--fg-subtle);
+  font-weight: var(--medium);
+}
+.itemTitle {
+  font-size: var(--t3);
+  line-height: var(--lh4);
+  font-weight: var(--medium);
+  margin-top: var(--x0_5);
+}
+.flag {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: var(--bold);
+  border-radius: var(--rfull);
+  padding: 1px var(--x2);
+  margin-top: var(--x1_5);
+}
+.flag.save {
+  background: var(--brand-weak);
+  color: var(--fg-brand);
+}
+.flag.over {
+  background: var(--bg-neutral-weak);
+  color: var(--fg-subtle);
+}
+.panelEmpty {
+  padding: var(--x12) 0;
+  text-align: center;
+  font-size: var(--t3);
+  line-height: var(--lh5);
+  color: var(--fg-muted);
+}
+.adslot {
+  margin-top: var(--x7);
+  background: var(--bg-basement);
+  border-radius: var(--r3);
+  padding: var(--x9) var(--x3);
+  text-align: center;
+  font-size: var(--t2);
+  color: var(--fg-subtle);
+  font-weight: var(--medium);
+}
+
+@media (max-width: 900px) {
+  .wrap {
+    grid-template-columns: 1fr;
+  }
+  .grid {
+    border-right: 0;
+    border-bottom: 1px solid var(--stroke-muted);
+  }
+}
+
+@media (max-width: 760px) {
+  .day {
+    min-height: 62px;
+    padding: var(--x1);
+  }
+  .ev {
+    font-size: 10px;
+    gap: 3px;
+    margin-top: 2px;
+  }
+  .dot {
+    width: 4px;
+    height: 4px;
+    flex: 0 0 4px;
+  }
+  .evmore {
+    font-size: 10px;
+    padding-left: var(--x1_5);
+  }
+  .dnum {
+    font-size: var(--t2);
+    min-width: 20px;
+    height: 20px;
+    line-height: 20px;
+  }
+}

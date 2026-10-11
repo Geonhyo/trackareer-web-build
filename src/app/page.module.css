@@ -1,0 +1,28 @@
+.inq {
+  background: var(--bg-basement);
+  border-radius: var(--r4);
+  display: flex;
+  align-items: center;
+  gap: var(--x3);
+  padding: var(--x5) var(--x6);
+  margin-top: var(--x12);
+}
+.inq p {
+  font-size: var(--t4);
+  line-height: var(--lh5);
+  color: var(--fg-muted);
+}
+.inq a {
+  margin-left: auto;
+}
+
+@media (max-width: 560px) {
+  .inq {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--x3);
+  }
+  .inq a {
+    margin-left: 0;
+  }
+}

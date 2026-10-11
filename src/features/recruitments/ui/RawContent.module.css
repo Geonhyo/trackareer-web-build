@@ -1,0 +1,112 @@
+.wrap {
+  position: relative;
+  max-height: 560px;
+  overflow: hidden;
+}
+.wrap.open {
+  max-height: none;
+}
+.wrap:not(.open)::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 160px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0), var(--bg-default) 82%);
+  pointer-events: none;
+}
+
+.raw h4 {
+  font-size: var(--t5);
+  line-height: var(--lh6);
+  font-weight: var(--bold);
+  margin-top: var(--x8);
+  padding-bottom: var(--x2_5);
+  border-bottom: 1px solid var(--stroke-muted);
+}
+.raw h4:first-child {
+  margin-top: 0;
+}
+.raw h5 {
+  font-size: var(--t4);
+  line-height: var(--lh5);
+  font-weight: var(--bold);
+  color: var(--fg-brand);
+  margin-top: var(--x5);
+}
+.raw p {
+  font-size: var(--t3);
+  line-height: var(--lh6);
+  color: var(--fg-muted);
+  margin-top: var(--x3);
+}
+.raw ul {
+  margin-top: var(--x2_5);
+}
+.raw ul li {
+  position: relative;
+  padding-left: var(--x3_5);
+  margin-bottom: var(--x1_5);
+  font-size: var(--t3);
+  line-height: var(--lh5);
+  color: var(--fg-muted);
+}
+.raw ul li::before {
+  content: '';
+  position: absolute;
+  left: 2px;
+  top: 9px;
+  width: 4px;
+  height: 4px;
+  border-radius: var(--rfull);
+  background: var(--gray400);
+}
+.raw ol {
+  margin-top: var(--x2_5);
+  counter-reset: step;
+  list-style: none;
+}
+.raw ol li {
+  position: relative;
+  padding-left: var(--x7);
+  margin-bottom: var(--x2);
+  counter-increment: step;
+  font-size: var(--t3);
+  line-height: var(--lh5);
+  color: var(--fg-muted);
+}
+.raw ol li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: var(--rfull);
+  background: var(--brand-weak);
+  color: var(--fg-brand);
+  font-size: var(--t1);
+  font-weight: var(--bold);
+  text-align: center;
+  line-height: 20px;
+}
+.raw :global(.rawbox) {
+  background: var(--bg-basement);
+  border-radius: var(--r3);
+  padding: var(--x4) var(--x5);
+  margin-top: var(--x3);
+}
+.raw :global(.rawbox) p {
+  margin-top: 0;
+}
+.raw a {
+  color: var(--fg-brand);
+  text-decoration: underline;
+}
+
+.more {
+  margin-top: var(--x4);
+  display: flex;
+  justify-content: center;
+}

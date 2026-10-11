@@ -1,0 +1,125 @@
+.page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: var(--x10) var(--x6) var(--x14);
+  display: flex;
+  flex-direction: column;
+  gap: var(--x8);
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--x2);
+  padding-bottom: var(--x6);
+  border-bottom: 1px solid var(--stroke-muted);
+}
+.head h1 {
+  font-size: var(--t9);
+  line-height: var(--lh9);
+  font-weight: var(--bold);
+  letter-spacing: -0.03em;
+}
+.head p {
+  font-size: var(--t3);
+  line-height: var(--lh5);
+  color: var(--fg-subtle);
+}
+
+.body {
+  font-size: var(--t4);
+  line-height: var(--lh6);
+  color: var(--fg-neutral);
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+.body h2 {
+  margin-top: var(--x10);
+  font-size: var(--t6);
+  line-height: var(--lh7);
+  font-weight: var(--bold);
+}
+.body h3 {
+  margin-top: var(--x6);
+  font-size: var(--t5);
+  line-height: var(--lh6);
+  font-weight: var(--bold);
+}
+.body h2 + h3 {
+  margin-top: var(--x4);
+}
+.body > :first-child {
+  margin-top: 0;
+}
+.body p,
+.body > ol,
+.body > ul {
+  margin-top: var(--x2);
+}
+.body b {
+  font-weight: var(--bold);
+}
+.body a {
+  color: var(--fg-brand);
+  text-decoration: underline;
+}
+
+.ol,
+.ul {
+  display: flex;
+  flex-direction: column;
+  gap: var(--x1);
+  padding-left: var(--x6);
+}
+.ol {
+  list-style: decimal;
+}
+.ul {
+  list-style: disc;
+}
+.ol .ol,
+.ol .ul,
+.ul .ol,
+.ul .ul {
+  margin-top: var(--x1);
+}
+.ol .ol {
+  list-style: lower-alpha;
+}
+.ul .ul {
+  list-style: circle;
+}
+.ol li::marker,
+.ul li::marker {
+  color: var(--fg-muted);
+}
+
+.others {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--x2);
+  padding-top: var(--x6);
+  border-top: 1px solid var(--stroke-muted);
+}
+.others a {
+  border: 1px solid var(--stroke);
+  border-radius: var(--rfull);
+  padding: var(--x1_5) var(--x3);
+  font-size: var(--t3);
+  line-height: var(--lh5);
+  color: var(--fg-muted);
+}
+.others a:hover {
+  background: var(--bg-basement);
+  color: var(--fg-neutral);
+}
+
+@media (max-width: 760px) {
+  .page {
+    padding: var(--x8) var(--x4) var(--x12);
+  }
+  .head h1 {
+    font-size: var(--t8);
+    line-height: var(--lh8);
+  }
+}

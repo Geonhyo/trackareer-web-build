@@ -1,0 +1,136 @@
+.hdr {
+  background: var(--ink);
+  height: var(--header-h);
+  display: flex;
+  align-items: center;
+  gap: var(--x6);
+  padding: 0 var(--x7);
+  position: sticky;
+  top: 0;
+  z-index: 40;
+}
+
+.wm {
+  color: var(--fg-white);
+  font-size: var(--t6);
+  line-height: var(--lh6);
+  font-weight: var(--bold);
+  letter-spacing: -0.035em;
+  white-space: nowrap;
+}
+.wm i {
+  font-style: normal;
+  color: var(--brand-on-dark);
+}
+
+.nav {
+  display: flex;
+  gap: var(--x0_5);
+  margin-left: auto;
+}
+.nav a {
+  color: #c3c6cc;
+  font-size: var(--t4);
+  line-height: var(--lh5);
+  font-weight: var(--medium);
+  padding: var(--x1_5) var(--x3);
+  border-radius: var(--rfull);
+}
+.nav a:hover {
+  color: var(--fg-white);
+  background: rgba(255, 255, 255, 0.08);
+}
+.nav a[aria-current='page'] {
+  color: var(--fg-white);
+  background: rgba(255, 255, 255, 0.14);
+  font-weight: var(--bold);
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: var(--x2);
+  margin-left: var(--x5);
+  /* 세션 로딩 중에도 헤더 폭이 흔들리지 않도록 최소 폭을 잡는다 */
+  min-height: 30px;
+}
+
+.ghost {
+  border-radius: var(--rfull);
+  padding: var(--x1_5) var(--x3);
+  font-size: var(--t3);
+  line-height: var(--lh3);
+  font-weight: var(--medium);
+  color: #c3c6cc;
+  white-space: nowrap;
+}
+.ghost:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--fg-white);
+}
+
+.login {
+  background: var(--brand-solid);
+  color: var(--fg-white);
+  border-radius: var(--rfull);
+  padding: var(--x2) var(--x4);
+  font-size: var(--t3);
+  line-height: var(--lh3);
+  font-weight: var(--bold);
+  white-space: nowrap;
+}
+.login:hover {
+  background: var(--brand-solid-hover);
+}
+
+.who {
+  color: #c3c6cc;
+  font-size: var(--t3);
+  white-space: nowrap;
+}
+
+.menuBtn {
+  display: none;
+  color: var(--fg-white);
+  font-size: var(--t7);
+  line-height: 1;
+  padding: var(--x1);
+}
+
+@media (max-width: 880px) {
+  .hdr {
+    padding: 0 var(--x4);
+    gap: 0;
+  }
+  .nav {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: var(--header-h);
+    background: var(--ink);
+    flex-direction: column;
+    padding: var(--x2);
+    display: none;
+    z-index: 41;
+  }
+  .nav.open {
+    display: flex;
+  }
+  .nav a {
+    text-align: left;
+    padding: var(--x3);
+    font-size: var(--t5);
+    border-radius: var(--r2);
+  }
+  .right {
+    margin-left: auto;
+    gap: var(--x1_5);
+  }
+  .who {
+    display: none;
+  }
+  .menuBtn {
+    display: block;
+    margin-left: var(--x2_5);
+  }
+}
