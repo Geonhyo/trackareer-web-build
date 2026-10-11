@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 import { LoginClient } from './LoginClient';
 import { toSafeNext } from '@/shared/lib/safeNext';
+import { RECRUITMENT_CATALOG_ENABLED } from '@/shared/config/site';
 
 export const metadata: Metadata = {
   title: '로그인',
@@ -14,6 +16,7 @@ export default async function LoginPage({
 }: {
   searchParams: Promise<{ next?: string }>;
 }) {
+  if (!RECRUITMENT_CATALOG_ENABLED) notFound();
   const { next } = await searchParams;
   return <LoginClient next={toSafeNext(next)} />;
 }
