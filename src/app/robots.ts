@@ -7,7 +7,7 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: '*',
       allow: '/',
       // 개인화 화면은 색인 대상이 아니다
-      disallow: ['/login', '/saved', '/account/', '/api/'],
+      disallow: ['/login', '/saved', '/api/'],
     },
     sitemap: `${SITE_URL}/sitemap.xml`,
   };
