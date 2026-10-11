@@ -1,9 +1,8 @@
 .shell {
   width: 100%;
-  max-width: var(--shell-max);
-  margin: 0 auto;
-  background: var(--bg-default);
   min-height: 100vh;
+  min-height: 100dvh;
+  background: var(--bg-default);
   display: flex;
   flex-direction: column;
 }

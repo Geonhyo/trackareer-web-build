@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { useSession } from '@/features/auth/ui/SessionProvider';
 import { RECRUITMENT_CATALOG_ENABLED } from '@/shared/config/site';
-import { Wordmark } from './Wordmark';
+import { BrandLogo } from './BrandLogo';
 import styles from './SiteHeader.module.css';
 
 const NAV_ITEMS = [
@@ -31,8 +31,8 @@ export function SiteHeader() {
 
   return (
     <header className={styles.hdr}>
-      <Link href="/" aria-label="트래커리어 홈">
-        <Wordmark className={styles.wm} />
+      <Link href="/" aria-label="트래커리어 홈" className={styles.home}>
+        <BrandLogo className={styles.logo} />
       </Link>
 
       {RECRUITMENT_CATALOG_ENABLED ? (

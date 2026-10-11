@@ -8,7 +8,7 @@ import { SaveActionButton } from '@/features/recruitments/ui/SaveActionButton';
 import { EMPLOYMENT_TYPE_LABEL } from '@/features/recruitments/model/types';
 import { getDdayLabel, getDeadlineText, isExpired } from '@/shared/lib/date';
 import { sanitizeContentHtml } from '@/shared/lib/sanitizeHtml';
-import { SITE_URL, RECRUITMENT_CATALOG_ENABLED } from '@/shared/config/site';
+import { OG_IMAGE, SITE_URL, RECRUITMENT_CATALOG_ENABLED } from '@/shared/config/site';
 import styles from './detail.module.css';
 
 interface PageProps {
@@ -31,7 +31,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title,
     description,
     alternates: { canonical: `/recruitments/${post.id}` },
-    openGraph: { type: 'article', url: `/recruitments/${post.id}`, title, description },
+    openGraph: {
+      type: 'article',
+      url: `/recruitments/${post.id}`,
+      title,
+      description,
+      images: [OG_IMAGE],
+    },
   };
 }
 
