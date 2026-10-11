@@ -26,26 +26,6 @@
   color: var(--fg-subtle);
 }
 
-.versions a {
-  color: var(--fg-muted);
-  text-decoration: underline;
-}
-.versions a:hover {
-  color: var(--fg-brand);
-}
-.head .archived {
-  margin-top: var(--x2);
-  border-radius: var(--r3);
-  background: var(--brand-weak);
-  padding: var(--x3) var(--x4);
-  font-size: var(--t4);
-  color: var(--fg-brand);
-}
-.archived a {
-  font-weight: var(--bold);
-  text-decoration: underline;
-}
-
 .body {
   font-size: 15px;
   line-height: 1.75;

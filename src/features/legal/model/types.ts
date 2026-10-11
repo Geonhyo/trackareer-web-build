@@ -18,7 +18,5 @@ export interface LegalDoc {
   version: string;
   /** YYYY-MM-DD */
   effectiveDate: string;
-  /** 이전 버전만. 다음 버전 시행 전날(YYYY-MM-DD) */
-  effectiveUntil?: string;
   blocks: LegalBlock[];
 }

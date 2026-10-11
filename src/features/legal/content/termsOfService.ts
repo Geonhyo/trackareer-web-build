@@ -1,7 +1,7 @@
 import type { LegalDoc } from '../model/types';
 import { COMPANY, EFFECTIVE_V2, EFFECTIVE_V2_LABEL, SUPPORT } from './company';
 
-/** 문구를 고치면 version · effectiveDate를 올리고, 직전 본문은 archive/로 옮긴다. */
+/** 문구를 고치면 version · effectiveDate를 올린다. */
 export const termsOfService: LegalDoc = {
   slug: 'terms-of-service',
   title: '서비스 이용약관',
@@ -47,7 +47,7 @@ export const termsOfService: LegalDoc = {
       type: 'ol',
       items: [
         '회원가입은 카카오 또는 Apple 계정으로 로그인한 뒤 이 약관과 개인정보 수집·이용에 동의하면 완료됩니다.',
-        '**만 14세 미만은 회원가입을 할 수 없습니다.** 만 14세 미만이 가입한 사실이 확인되면 회사는 해당 계정과 개인정보를 지체 없이 삭제합니다.',
+        '**만 14세 미만은 회원가입을 할 수 없으며, 회원은 이 약관에 동의함으로써 만 14세 이상임을 확인합니다.** 만 14세 미만이 가입한 사실이 확인되면 회사는 해당 계정과 개인정보를 지체 없이 삭제합니다.',
         {
           text: '회사는 다음에 해당하는 가입 신청을 거절하거나, 가입한 뒤라도 이용을 제한하거나 계정을 삭제할 수 있습니다.',
           sub: {
@@ -72,7 +72,7 @@ export const termsOfService: LegalDoc = {
       items: [
         '회원은 앱의 마이페이지 > 계정 관리 > 계정 삭제에서 언제든지 탈퇴를 요청할 수 있습니다.',
         '탈퇴를 요청하면 바로 로그아웃되고 알림이 중단되며, 요청일로부터 **30일 동안 계정이 보관**됩니다. 이 기간에 다시 로그인하면 계정을 복구할 수 있습니다.',
-        '30일이 지나면 계정과 콘텐츠는 개인정보 처리방침에 따라 파기되어 복구할 수 없고, 카카오·Apple 계정과의 연결도 해제됩니다.',
+        '30일이 지나면 계정의 개인정보는 개인정보 처리방침에 따라 파기되고 카카오·Apple 계정과의 연결도 해제되며, 계정은 복구할 수 없습니다. 회원을 알아볼 수 없게 처리된 이용 기록은 서비스 개선과 통계에 이용될 수 있습니다.',
       ],
     },
     { type: 'h3', text: '제8조 (이용 제한)' },

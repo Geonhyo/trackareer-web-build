@@ -4,7 +4,7 @@ import { COMPANY, EFFECTIVE_V2, EFFECTIVE_V2_LABEL, SUPPORT } from './company';
 /**
  * 광고성 정보 수신 동의(정보통신망법 제50조). 전송 원칙은 서버 push-campaign과 같아야 한다
  * ((광고) 표시 · 수신 거부 안내 · 21시~8시 발송 차단).
- * 문구를 고치면 version · effectiveDate를 올리고 직전 본문은 archive/로 옮긴다.
+ * 문구를 고치면 version · effectiveDate를 올린다.
  */
 export const marketingNotification: LegalDoc = {
   slug: 'marketing-notification',

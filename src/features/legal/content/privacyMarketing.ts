@@ -3,7 +3,7 @@ import { COMPANY, EFFECTIVE_V2, EFFECTIVE_V2_LABEL, SUPPORT } from './company';
 
 /**
  * 선택 동의. 광고성 정보를 실제로 보내는 것은 '마케팅 정보 수신 동의'가 따로 필요하다.
- * 문구를 고치면 version · effectiveDate를 올리고 직전 본문은 archive/로 옮긴다.
+ * 문구를 고치면 version · effectiveDate를 올린다.
  */
 export const privacyMarketing: LegalDoc = {
   slug: 'privacy-marketing',

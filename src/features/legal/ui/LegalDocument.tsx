@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import type { ReactNode } from 'react';
-import { getPreviousVersions, LEGAL_DOCS, legalDocPath } from '../content';
+import { LEGAL_DOCS, legalDocPath } from '../content';
 import type { LegalBlock, LegalDoc, LegalList, LegalTable } from '../model/types';
 import styles from './LegalDocument.module.css';
 
@@ -106,33 +106,6 @@ const formatDate = (key: string) => {
   return `${year}년 ${month}월 ${day}일`;
 };
 
-/** 현재 버전이면 이전 버전 링크를, 이전 버전이면 현재 버전으로 가는 안내를 보여 준다 */
-function VersionNav({ doc }: { doc: LegalDoc }) {
-  if (doc.effectiveUntil) {
-    return (
-      <p className={styles.archived}>
-        {formatDate(doc.effectiveUntil)}까지 적용된 이전 버전입니다.{' '}
-        <Link href={legalDocPath(doc.slug)}>현재 버전 보기</Link>
-      </p>
-    );
-  }
-  const previous = getPreviousVersions(doc.slug);
-  if (!previous.length) return null;
-  return (
-    <p className={styles.versions}>
-      이전 버전:{' '}
-      {previous.map((old, i) => (
-        <span key={old.version}>
-          {i > 0 ? ', ' : null}
-          <Link href={legalDocPath(old.slug, old.version)}>
-            {old.version} ({formatDate(old.effectiveDate)} ~ {formatDate(old.effectiveUntil ?? '')})
-          </Link>
-        </span>
-      ))}
-    </p>
-  );
-}
-
 /**
  * 약관 문서 페이지. 앱이 외부 브라우저·웹뷰로 여는 화면이므로 서버에서 전부 렌더한다.
  */
@@ -144,7 +117,6 @@ export function LegalDocument({ doc }: { doc: LegalDoc }) {
         <p>
           시행일 {formatDate(doc.effectiveDate)} · 버전 {doc.version}
         </p>
-        <VersionNav doc={doc} />
       </header>
 
       <div className={styles.body}>
