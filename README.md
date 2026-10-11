@@ -98,5 +98,4 @@ src/
 - [ ] Apple 웹 로그인 (서버의 Services ID 대응 후)
 - [ ] 회사명 검색 (서버 `q` 파라미터 확정 후)
 - [ ] 배너·광고 슬롯 운영 도구화 여부 확정
-- [ ] OG 이미지 (`public/images/og.png`)와 favicon
 - [ ] 구 `trackareer-front` 내리고 배포 전환

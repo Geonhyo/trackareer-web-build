@@ -2,85 +2,87 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: var(--x16) var(--x6);
+  padding: var(--x16) var(--side-pad) var(--x10);
 }
 
-.wm {
-  font-size: var(--t8);
-  line-height: var(--lh8);
-  font-weight: var(--bold);
-  letter-spacing: -0.035em;
-}
-.wm i {
-  font-style: normal;
-  color: var(--brand-solid);
+/* iOS 앱 아이콘처럼 둥근 사각형(약 22%) + 옅은 테두리 */
+.appIcon {
+  width: 96px;
+  height: 96px;
+  border-radius: 22px;
+  box-shadow:
+    0 0 0 1px var(--stroke-muted),
+    var(--shadow-2);
 }
 
 .page h1 {
-  margin-top: var(--x7);
+  margin-top: var(--x8);
   text-align: center;
-  font-size: var(--t7);
-  line-height: var(--lh7);
+  font-size: var(--t11);
+  line-height: var(--lh11);
   font-weight: var(--bold);
-  letter-spacing: -0.03em;
+  letter-spacing: -0.035em;
+  word-break: keep-all;
 }
 
 .lede {
   margin-top: var(--x3);
   text-align: center;
-  font-size: var(--t4);
-  line-height: var(--lh6);
+  font-size: var(--t5);
+  line-height: var(--lh7);
   color: var(--fg-muted);
-  max-width: 420px;
+  max-width: 440px;
+  word-break: keep-all;
 }
 
 .buttons {
   margin-top: var(--x10);
   display: flex;
   width: 100%;
-  max-width: 336px;
+  max-width: 360px;
   flex-direction: column;
-  gap: var(--x3);
+  gap: var(--x2_5);
 }
 
 .store {
-  display: flex;
   width: 100%;
-  align-items: center;
-  justify-content: center;
-  gap: var(--x2_5);
-  border-radius: var(--r4);
-  padding: var(--x4) var(--x6);
+  min-height: 52px;
   font-size: var(--t5);
-  line-height: var(--lh6);
-  font-weight: var(--bold);
-}
-.store.primary {
-  background: var(--gray900);
-  color: var(--fg-white);
-}
-.store.primary:hover {
-  background: var(--ink);
-}
-.store.secondary {
-  border: 1px solid var(--stroke);
-  background: var(--bg-default);
-  color: var(--fg-neutral);
-}
-.store.secondary:hover {
-  border-color: var(--gray400);
 }
 
 .icon {
-  width: 24px;
-  height: 24px;
-  flex: 0 0 24px;
+  width: 22px;
+  height: 22px;
+  flex: 0 0 22px;
 }
 
 .note {
-  margin-top: var(--x5);
+  margin-top: var(--x4);
   text-align: center;
   font-size: var(--t3);
   line-height: var(--lh5);
   color: var(--fg-subtle);
+}
+
+@media (max-width: 760px) {
+  .page {
+    padding-top: var(--x12);
+  }
+  .appIcon {
+    width: 80px;
+    height: 80px;
+    border-radius: 18px;
+  }
+  .page h1 {
+    margin-top: var(--x6);
+    font-size: var(--t9);
+    line-height: var(--lh9);
+  }
+  .lede {
+    font-size: var(--t4);
+    line-height: var(--lh6);
+  }
+  .buttons {
+    margin-top: var(--x8);
+  }
 }

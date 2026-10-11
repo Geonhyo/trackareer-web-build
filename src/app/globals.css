@@ -1,9 +1,8 @@
 /* =========================================================
-   SEED Design System 기반 토큰 (당근 seed-design.io)
-   - dimension / radius / typography 스케일 차용
-   - color role 중 brand = #2E6AEA 로 치환
-   목업(trackareer_web_mockup.html)의 :root 토큰을 그대로 옮긴 것이므로
-   값을 바꿀 때는 목업과 함께 갱신한다.
+   디자인 토큰
+   - dimension / radius / typography 스케일은 SEED Design System(seed-design.io) 차용
+   - 색은 앱 2.0과 같다: trackareer-mobile `constants/style/colors.ts`의 `colors.v2`
+     (brand #3259AB · ink #111111 …). 앱 색을 바꾸면 여기도 함께 바꾼다.
    ========================================================= */
 :root {
   /* dimension */
@@ -78,44 +77,46 @@
   --gray700: #6c6f78;
   --gray800: #4d5159;
   --gray900: #212124;
-  /* role · brand (#2E6AEA) */
-  --brand-solid: #2e6aea;
-  --brand-solid-hover: #2a60d4;
-  --brand-solid-pressed: #2557c0;
-  --brand-weak: #ebf1fe;
-  --brand-weak-hover: #dce7fd;
-  --fg-brand: #2358c9;
-  --brand-on-dark: #7ba5f7;
-  /* role · critical */
-  --critical-solid: #ef4452;
-  --critical-weak: #fdecee;
-  --fg-critical: #d32f3d;
-  /* role · positive */
-  --positive-weak: #e9f6ee;
-  --fg-positive: #1b7f47;
-  /* role · surface / text */
+  /* role · brand — 앱 v2.brand · brandStrong · brandWash */
+  --brand-solid: #3259ab;
+  --brand-solid-hover: #27468a;
+  --brand-solid-pressed: #224794;
+  --brand-solid-disabled: #d9dee8;
+  --brand-weak: #eaf0fa;
+  --brand-weak-hover: #dbe9fe;
+  --fg-brand: #27468a;
+  /* role · critical — 앱 v2.fail */
+  --critical-solid: #d12a40;
+  --critical-weak: #f7ebeb;
+  --fg-critical: #a32a2a;
+  /* role · positive — 앱 v2.pass */
+  --positive-weak: #e7f3ed;
+  --fg-positive: #12784f;
+  /* role · surface / text — 앱 v2.ink · ink2 · ink3 · line · fill · fill2 */
   --bg-default: #ffffff;
-  --bg-basement: #f7f8f9;
-  --bg-neutral-weak: #f4f4f5;
-  --bg-neutral-weak-hover: #ebecef;
-  --stroke-muted: #ebecef;
-  --stroke: #e0e1e4;
-  --fg-neutral: #212124;
-  --fg-muted: #6c6f78;
-  --fg-subtle: #8d9099;
+  --bg-basement: #f7f7f7;
+  --bg-neutral-weak: #efefef;
+  --bg-neutral-weak-hover: #e5e5ea;
+  --stroke-muted: #e9e9e9;
+  --stroke: #dddee3;
+  --fg-neutral: #111111;
+  --fg-muted: #5f5f5f;
+  --fg-subtle: #8e8e8e;
   --fg-white: #ffffff;
-  --ink: #1a1d22;
-  --shadow-1: 0 1px 2px rgba(33, 33, 36, 0.06);
-  --shadow-2: 0 4px 16px rgba(33, 33, 36, 0.1);
-  --shadow-3: 0 12px 32px rgba(33, 33, 36, 0.16);
-  /* layout */
-  --shell-max: 1160px;
-  --header-h: 58px;
+  --ink: #111111;
+  --shadow-1: 0 1px 2px rgba(17, 17, 17, 0.06);
+  --shadow-2: 0 4px 16px rgba(17, 17, 17, 0.1);
+  --shadow-3: 0 12px 32px rgba(17, 17, 17, 0.16);
+  /* layout — 화면은 꽉 채우고, 공고 목록처럼 넓게 퍼지는 본문만 이 폭에서 멈춘다 */
+  --content-max: 1200px;
+  --header-h: 64px;
+  --side-pad: var(--x10);
 }
 
 @media (max-width: 880px) {
   :root {
-    --header-h: 54px;
+    --header-h: 56px;
+    --side-pad: var(--x5);
   }
 }
 
@@ -137,7 +138,7 @@ body {
     'Apple SD Gothic Neo',
     'Malgun Gothic',
     sans-serif;
-  background: var(--gray200);
+  background: var(--bg-default);
   color: var(--fg-neutral);
   font-size: var(--t4);
   line-height: var(--lh5);
@@ -197,14 +198,12 @@ ul {
    컴포넌트 전용 스타일은 각 *.module.css 에 둔다.
    ========================================================= */
 
-/* 본문 좌우 거터 */
+/* 본문 좌우 거터 — 아주 넓은 화면에서는 --content-max에서 멈춘다 */
 .gutter {
-  padding: 0 var(--x7);
-}
-@media (max-width: 760px) {
-  .gutter {
-    padding: 0 var(--x4);
-  }
+  width: 100%;
+  max-width: calc(var(--content-max) + var(--side-pad) * 2);
+  margin: 0 auto;
+  padding: 0 var(--side-pad);
 }
 
 /* 섹션 */
@@ -277,17 +276,25 @@ ul {
   color: var(--fg-neutral);
 }
 
+/* 큰 버튼 — 앱 PillButton(L): 높이 48 · 둥근 끝 · 굵은 글자 */
 .btnLg {
+  min-height: 48px;
   border-radius: var(--rfull);
-  padding: var(--x3_5) var(--x6);
-  font-size: var(--t4);
+  padding: var(--x3) var(--x5);
+  font-size: 15px;
   line-height: var(--lh5);
   font-weight: var(--bold);
+  letter-spacing: -0.02em;
   text-align: center;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: var(--x2);
+  transition:
+    background 0.16s,
+    border-color 0.16s;
 }
+/* 앱 primary */
 .btnLg.brand {
   background: var(--brand-solid);
   color: var(--fg-white);
@@ -295,13 +302,32 @@ ul {
 .btnLg.brand:hover {
   background: var(--brand-solid-hover);
 }
+.btnLg.brand:active {
+  background: var(--brand-solid-pressed);
+}
+/* 앱 기획: 비활성은 흐리게가 아니라 연한 남색 + 흰 글자 */
+.btnLg.brand:disabled {
+  background: var(--brand-solid-disabled);
+  color: var(--fg-white);
+  cursor: not-allowed;
+}
+/* 앱 sub */
+.btnLg.sub {
+  background: var(--bg-neutral-weak);
+  color: var(--fg-neutral);
+}
+.btnLg.sub:hover {
+  background: var(--bg-neutral-weak-hover);
+}
+/* 앱 line */
 .btnLg.ghost {
   background: var(--bg-default);
   color: var(--fg-neutral);
-  border: 1px solid var(--stroke);
+  border: 1px solid var(--stroke-muted);
 }
 .btnLg.ghost:hover {
-  border-color: var(--gray400);
+  border-color: var(--stroke);
+  background: var(--bg-basement);
 }
 
 /* 채용유형 태그 */

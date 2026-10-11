@@ -1,60 +1,88 @@
 .ftr {
-  background: var(--ink);
-  padding: var(--x7);
+  margin-top: var(--x16);
+  border-top: 1px solid var(--stroke-muted);
+  background: var(--bg-basement);
+  padding: var(--x10) var(--side-pad) var(--x12);
   display: flex;
-  align-items: flex-start;
+  flex-direction: column;
+  gap: var(--x5);
+  font-size: var(--t3);
+  line-height: var(--lh5);
+  color: var(--fg-subtle);
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   gap: var(--x4);
   flex-wrap: wrap;
-  margin-top: var(--x10);
 }
 
-.wm {
-  color: var(--fg-white);
-  font-size: var(--t6);
-  line-height: var(--lh6);
-  font-weight: var(--bold);
-  letter-spacing: -0.035em;
-}
-.wm i {
-  font-style: normal;
-  color: var(--brand-on-dark);
-}
-
-.info {
-  margin-left: auto;
-  text-align: right;
-  color: #868a92;
-  font-size: var(--t2);
-  line-height: var(--lh4);
-}
-.info a:hover {
-  color: var(--fg-white);
+.logo {
+  display: block;
+  height: 22px;
+  width: auto;
+  color: var(--ink);
 }
 
 .links {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--x1) var(--x3);
-  justify-content: flex-end;
-  margin-bottom: var(--x1_5);
+  gap: var(--x1) var(--x5);
+}
+.links a {
+  color: var(--fg-muted);
+  font-size: var(--t4);
+  /* 모바일 터치 영역 */
+  padding: var(--x2) 0;
+}
+.links a:hover {
+  color: var(--fg-neutral);
 }
 /* 개인정보 처리방침은 다른 링크와 구분되게 표시한다(개인정보 보호법 시행령 제31조) */
-.privacy {
+.links .privacy {
   font-weight: var(--bold);
-  color: #c5c7ce;
+  color: var(--fg-neutral);
+}
+
+.contacts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--x1) var(--x6);
+}
+.contacts div {
+  display: flex;
+  gap: var(--x2);
+}
+.contacts dd a {
+  color: var(--fg-muted);
+}
+.contacts dd a:hover {
+  color: var(--fg-brand);
+  text-decoration: underline;
+}
+
+.copy {
+  font-size: var(--t2);
 }
 
 @media (max-width: 760px) {
   .ftr {
-    padding: var(--x6) var(--x4);
-    flex-direction: column;
-    gap: var(--x2_5);
+    margin-top: var(--x12);
+    padding-top: var(--x8);
+    padding-bottom: calc(var(--x10) + env(safe-area-inset-bottom));
+    gap: var(--x4);
   }
-  .info {
-    margin-left: 0;
-    text-align: left;
+  .top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--x3);
   }
   .links {
-    justify-content: flex-start;
+    gap: 0 var(--x4);
+  }
+  .contacts {
+    flex-direction: column;
   }
 }
