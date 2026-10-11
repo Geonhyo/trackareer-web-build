@@ -12,14 +12,14 @@
 ## 실행
 
 ```bash
-npm install
+pnpm install
 cp .env.example .env.local   # 값 채우기
-npm run dev                  # http://localhost:3000
+pnpm dev                      # http://localhost:3000
 
-npm run build                # 프로덕션 빌드
-npm run typecheck            # tsc --noEmit
-npm run lint                 # eslint
-npm run format               # prettier
+pnpm build                    # 프로덕션 빌드
+pnpm typecheck                # tsc --noEmit
+pnpm lint                     # eslint
+pnpm format                   # prettier
 ```
 
 ## 스택과 선택 이유
