@@ -13,7 +13,7 @@ import {
   getRecruitments,
 } from '@/features/recruitments/service/recruitmentService';
 import { getDdayLabel } from '@/shared/lib/date';
-import { CONTACT_EMAIL, RECRUITMENT_CATALOG_ENABLED, SITE_NAME } from '@/shared/config/site';
+import { BUSINESS_EMAIL, RECRUITMENT_CATALOG_ENABLED, SITE_NAME } from '@/shared/config/site';
 import styles from './page.module.css';
 
 const BANNER_FEATURED_LIMIT = 3;
@@ -136,7 +136,7 @@ export default async function RecruitmentListPage({ searchParams }: PageProps) {
           <p>채용공고를 등록하거나 마케팅을 문의하고 싶으세요?</p>
           <a
             className="btn brand"
-            href={`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent('[트래커리어] 채용공고 등록·제휴 문의')}`}
+            href={`mailto:${BUSINESS_EMAIL}?subject=${encodeURIComponent('[트래커리어] 채용공고 등록·제휴 문의')}`}
           >
             문의하기
           </a>
