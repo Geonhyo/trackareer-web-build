@@ -8,6 +8,9 @@
 - 로그인(카카오·Apple) + 약관 동의
 - 관심 공고 저장 — **앱의 개인 공고로 담기**
 - 구 front에서 넘어온 필수 페이지: `/app`(앱 다운로드), `/account/delete`(계정 삭제 요청)
+- 약관 4종: `/docs/terms-of-service` · `privacy-policy` · `privacy-marketing` · `marketing-notification` (앱 env가 이 주소를 가리킨다)
+
+> 공고 화면(목록 · 상세 · 캘린더 · 관심 공고 · 로그인)은 아직 목업이라 `RECRUITMENT_CATALOG_ENABLED = false`(`src/shared/config/site.ts`)로 꺼 두었다. 꺼져 있으면 홈은 앱 소개 화면이고 공고 경로는 404, 헤더 메뉴 · 사이트맵에서도 빠진다.
 
 ## 실행
 

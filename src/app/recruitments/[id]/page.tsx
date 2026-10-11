@@ -8,7 +8,7 @@ import { SaveActionButton } from '@/features/recruitments/ui/SaveActionButton';
 import { EMPLOYMENT_TYPE_LABEL } from '@/features/recruitments/model/types';
 import { getDdayLabel, getDeadlineText, isExpired } from '@/shared/lib/date';
 import { sanitizeContentHtml } from '@/shared/lib/sanitizeHtml';
-import { SITE_URL } from '@/shared/config/site';
+import { SITE_URL, RECRUITMENT_CATALOG_ENABLED } from '@/shared/config/site';
 import styles from './detail.module.css';
 
 interface PageProps {
@@ -17,6 +17,7 @@ interface PageProps {
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  if (!RECRUITMENT_CATALOG_ENABLED) return {};
   const { id } = await params;
   const post = await getRecruitment(Number(id));
   if (!post) return { title: '공고를 찾을 수 없어요' };
@@ -35,6 +36,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function RecruitmentDetailPage({ params, searchParams }: PageProps) {
+  if (!RECRUITMENT_CATALOG_ENABLED) notFound();
   const [{ id }, query] = await Promise.all([params, searchParams]);
   const post = await getRecruitment(Number(id));
   if (!post) notFound();

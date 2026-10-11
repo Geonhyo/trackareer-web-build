@@ -1,6 +1,21 @@
 import Link from 'next/link';
+import { RECRUITMENT_CATALOG_ENABLED } from '@/shared/config/site';
 
 export default function NotFound() {
+  if (!RECRUITMENT_CATALOG_ENABLED) {
+    return (
+      <div className="center">
+        <h2>찾는 페이지가 없어요</h2>
+        <p className="lede">주소가 바뀌었거나 없어진 페이지예요.</p>
+        <div style={{ marginTop: 'var(--x8)', display: 'grid', gap: 'var(--x2_5)' }}>
+          <Link href="/" className="btnLg brand">
+            홈으로
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="center">
       <h2>
