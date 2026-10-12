@@ -3,7 +3,8 @@ import { APP_API_URL } from '../constants';
 /**
  * 계정 삭제 페이지 전용 API 호출.
  * 공고 카탈로그용 BFF를 거치지 않고 앱 API를 직접 부른다 —
- * 이 페이지는 accessToken을 두 번만 쓰고 끝나며 세션을 만들지 않는다.
+ * 이 페이지는 accessToken을 두 번만 쓰고 끝나며 브라우저에 세션을 남기지 않는다.
+ * 서버 세션(web-login이 만든 것)은 삭제 요청이 모두 끊고, 삭제하지 않고 나가면 logout이 끊는다.
  */
 export type ApiFailure = {
   ok: false;
@@ -16,6 +17,7 @@ export type LoginSuccess = {
   ok: true;
   isNewUser: false;
   accessToken: string;
+  refreshToken: string;
   user: { id: number; nickname: string; email: string };
 };
 
@@ -50,12 +52,14 @@ export const exchangeCode = async (
     body: JSON.stringify({ code }),
   });
   if (!ok) return toFailure(status, body);
-  // 🔴 refreshToken은 받지 않는다 — 이 페이지는 accessToken 두 번만 쓰고 끝난다.
+  // 🔴 refreshToken은 화면 state(메모리)에만 둔다 — 갱신에는 쓰지 않고, 삭제하지 않고 나갈 때 세션 폐기용.
+  // 브라우저 저장소에 넣지 않는다.
   if (body.isNewUser === true) return { ok: true, isNewUser: true };
   return {
     ok: true,
     isNewUser: false,
     accessToken: String(body.accessToken),
+    refreshToken: String(body.refreshToken),
     user: body.user as LoginSuccess['user'],
   };
 };
@@ -82,4 +86,17 @@ export const requestDeletion = async (
     headers: { Authorization: `Bearer ${accessToken}` },
   });
   return ok ? { ok: true, willBeDeletedAt: String(body.willBeDeletedAt) } : toFailure(status, body);
+};
+
+/** 삭제하지 않고 나갈 때 web-login이 만든 서버 세션을 끊는다 */
+export const logout = async (
+  accessToken: string,
+  refreshToken: string,
+): Promise<{ ok: true } | ApiFailure> => {
+  const { ok, status, body } = await request('/auth/logout', {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${accessToken}` },
+    body: JSON.stringify({ refreshToken }),
+  });
+  return ok ? { ok: true } : toFailure(status, body);
 };
