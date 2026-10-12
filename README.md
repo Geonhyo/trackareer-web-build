@@ -8,6 +8,7 @@
 - 로그인(카카오·Apple) + 약관 동의
 - 관심 공고 저장 — **앱의 개인 공고로 담기**
 - `/app`(앱 다운로드) — 구 front 주소 그대로
+- `/account/delete`(계정 삭제 요청, Google Play 요건) — 지금은 카카오 계정만
 - 약관 4종: `/docs/terms-of-service` · `privacy-policy` · `privacy-marketing` · `marketing-notification` (앱 env가 이 주소를 가리킨다)
 
 > 공고 화면(목록 · 상세 · 캘린더 · 관심 공고 · 로그인)은 아직 목업이라 `RECRUITMENT_CATALOG_ENABLED = false`(`src/shared/config/site.ts`)로 꺼 두었다. 꺼져 있으면 홈은 앱 소개 화면이고 공고 경로는 404, 헤더 메뉴 · 사이트맵에서도 빠진다.
@@ -50,6 +51,7 @@ src/
 │   ├── calendar/             마감 캘린더
 │   ├── saved/                관심 공고
 │   ├── login/                로그인 + /login/terms 약관 동의
+│   ├── account/delete/       계정 삭제 요청 (Google Play 요건)
 │   ├── app/                  앱 다운로드
 │   ├── docs/[slug]/          약관 4종
 │   └── api/saved-recruitments/  관심 공고 BFF (임시)
@@ -60,7 +62,8 @@ src/
 │   ├── saved/         service · ui(SavedProvider)
 │   ├── auth/          service · ui(SessionProvider)
 │   ├── legal/         약관 본문(content) · 렌더러(ui)
-│   └── app-download/  앱 소개 화면 (홈 · /app 공용)
+│   ├── app-download/  앱 소개 화면 (홈 · /app 공용)
+│   └── account/       계정 삭제 전용 상수 · API
 └── shared/            lib(날짜·정제·경로) · config(사이트 상수)
 ```
 
@@ -88,7 +91,8 @@ src/
 - **마감 시각 `null`(미명시)은 `23:59` 명시보다 뒤로 정렬**한다. 서버 도메인 규칙과 같다.
 - **마감 지난 공고도 표시·저장 가능**하다(회고적 기록 지원 방침).
 - **관심 저장 = 앱의 개인 공고 생성.** 웹 전용 북마크가 아니다. 앱에서 그 공고를 지우면 웹의 별도 풀린다.
-- **계정 삭제 요청 페이지(`/account/delete`)는 지금 두지 않는다.** 안드로이드 출시 때 Google Play가 "앱 없이 삭제 요청" 웹 링크를 요구하므로 그 전에 되살린다(초기 커밋 a21c814에 구현이 있다). 카카오 콘솔 Redirect URI · 서버 `KAKAO_WEB_REDIRECT_URI`와 경로가 정확히 같아야 한다.
+- `/account/delete` 경로와 `NEXT_PUBLIC_KAKAO_REDIRECT_URI`는 **카카오 콘솔 등록값·서버 `KAKAO_WEB_REDIRECT_URI`와 문자열이 정확히 같아야 한다.** 경로를 바꾸면 계정 삭제 로그인이 깨지고 Google Play 요건도 깨진다.
+- **계정 삭제 페이지는 지금 카카오 계정만 받는다.** Apple 계정은 앱에서 삭제하거나 메일로 요청하도록 안내한다. 웹 정식 오픈 때 웹 Apple 로그인(Services ID)을 붙이면서 여기도 Apple을 받는다. 탈퇴 흐름(사유 하나 · 선택, 삭제 먼저 → 사유 저장)과 문구는 앱 2.0 계정 삭제 화면 · 처리방침 제3조와 맞춘다.
 - 공고 원문 HTML은 서버 컴포넌트에서 `sanitizeContentHtml()`을 거친 것만 렌더한다.
 
 ## 남은 일

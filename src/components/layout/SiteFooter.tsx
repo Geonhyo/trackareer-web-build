@@ -1,5 +1,11 @@
 import Link from 'next/link';
-import { APP_DOWNLOAD_PATH, BUSINESS_EMAIL, SITE_NAME, SUPPORT_EMAIL } from '@/shared/config/site';
+import {
+  ACCOUNT_DELETE_PATH,
+  APP_DOWNLOAD_PATH,
+  BUSINESS_EMAIL,
+  SITE_NAME,
+  SUPPORT_EMAIL,
+} from '@/shared/config/site';
 import { legalDocPath } from '@/features/legal/content';
 import { BrandLogo } from './BrandLogo';
 import styles from './SiteFooter.module.css';
@@ -11,6 +17,7 @@ export function SiteFooter() {
         <BrandLogo className={styles.logo} />
         <nav className={styles.links} aria-label="사이트 정보">
           <Link href={APP_DOWNLOAD_PATH}>앱 다운로드</Link>
+          <Link href={ACCOUNT_DELETE_PATH}>계정 삭제</Link>
           <Link href={legalDocPath('terms-of-service')}>이용약관</Link>
           <Link href={legalDocPath('privacy-policy')} className={styles.privacy}>
             개인정보 처리방침
