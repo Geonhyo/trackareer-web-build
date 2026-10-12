@@ -28,3 +28,8 @@ export const PLAY_STORE_URL = '';
 export const RECRUITMENT_CATALOG_ENABLED = false;
 
 export const APP_DOWNLOAD_PATH = '/app';
+/**
+ * Google Play가 요구하는 "앱 없이 계정 삭제 요청" 웹 링크.
+ * 경로를 바꾸면 카카오 콘솔 Redirect URI · 서버 KAKAO_WEB_REDIRECT_URI도 함께 바꿔야 한다.
+ */
+export const ACCOUNT_DELETE_PATH = '/account/delete';
