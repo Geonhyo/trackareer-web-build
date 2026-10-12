@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import AccountDeleteClient from './AccountDeleteClient';
-import { COMPANY } from '@/features/legal/content/company';
 import { ACCOUNT_DELETE_PATH, OG_IMAGE, SITE_NAME, SUPPORT_EMAIL } from '@/shared/config/site';
 import styles from './accountDelete.module.css';
 
@@ -40,10 +39,6 @@ export default function AccountDeletePage() {
     <div className={styles.page}>
       <header className={styles.head}>
         <h1>트래커리어 계정 삭제 요청</h1>
-        <p>
-          취준 일정 관리 앱 트래커리어(운영: {COMPANY.name})의 계정 삭제 요청 페이지입니다. 앱을
-          설치하지 않고도 여기에서 삭제를 요청할 수 있어요.
-        </p>
       </header>
 
       <section className={styles.box}>
@@ -67,7 +62,7 @@ export default function AccountDeletePage() {
           계정 관리 &gt; 계정 삭제에서 삭제해 주세요.
         </p>
         <p>
-          문의·삭제 요청: <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a>
+          문의 요청: <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a>
         </p>
         <p className={styles.small}>
           공용 PC를 사용 중이라면 요청 후 카카오계정에서도 로그아웃해 주세요.
