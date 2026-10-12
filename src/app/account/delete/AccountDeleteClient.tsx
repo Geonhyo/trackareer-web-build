@@ -274,7 +274,7 @@ export default function AccountDeleteClient() {
           <h2>이미 삭제를 요청한 계정이에요</h2>
           <p>
             {screen.willBeDeletedAt
-              ? `${formatDate(screen.willBeDeletedAt)}에 삭제될 예정이에요.`
+              ? `${formatDate(screen.willBeDeletedAt)}에 탈퇴가 완료될 예정이에요.`
               : '삭제 예정일은 아래 메일로 문의해 주세요.'}{' '}
             그 전까지 앱에서 다시 로그인하면 복구할 수 있어요.
           </p>
@@ -285,8 +285,8 @@ export default function AccountDeleteClient() {
         <div className={`${styles.card} ${styles.filled}`}>
           <h2>삭제 요청이 접수되었어요</h2>
           <p>
-            <b>{formatDate(screen.willBeDeletedAt)}</b>에 회원을 알아볼 수 있는 정보가 파기되고
-            카카오 연결도 해제됩니다. 그 전까지 앱에서 다시 로그인하면 복구할 수 있어요.
+            <b>{formatDate(screen.willBeDeletedAt)}</b>에 탈퇴가 완료되고 카카오 연결도 해제됩니다.
+            그 전까지 앱에서 다시 로그인하면 복구할 수 있어요.
           </p>
         </div>
       ) : null}
@@ -340,9 +340,8 @@ export default function AccountDeleteClient() {
               삭제할 계정: <b>{screen.account}</b>
             </p>
             <p>
-              바로 로그인과 알림이 중단되고, 30일 뒤 회원을 알아볼 수 있는 정보가 파기되며 카카오
-              연결도 해제돼요. 30일 안에 앱에서 다시 로그인하면 복구할 수 있고, 그 뒤에는 복구할 수
-              없어요.
+              바로 로그인과 알림이 중단되고, 30일 뒤 탈퇴가 완료되며 카카오 연결도 해제돼요. 30일
+              안에 앱에서 다시 로그인하면 복구할 수 있고, 그 뒤에는 복구할 수 없어요.
             </p>
             <div className={styles.modalBtns}>
               <button
