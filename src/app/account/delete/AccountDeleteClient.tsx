@@ -12,7 +12,6 @@ import {
   KAKAO_REST_API_KEY,
   KAKAO_SDK_INTEGRITY,
   KAKAO_SDK_SRC,
-  LOGOUT_STORAGE_KEY,
   STATE_STORAGE_KEY,
   WITHDRAWAL_REASONS,
   type WithdrawalReason,
@@ -30,27 +29,11 @@ type Screen =
   | { kind: 'idle' }
   | { kind: 'exchanging' }
   | { kind: 'reasons'; accessToken: string; account: string }
-  | { kind: 'done'; willBeDeletedAt: string; kakaoLoggedOut?: boolean }
+  | { kind: 'done'; willBeDeletedAt: string }
   | { kind: 'pending'; willBeDeletedAt?: string }
   | { kind: 'notice'; title: string; message: string; retry: 'kakao' | 'email' };
 
 const EMAIL_NOTICE_TITLE = '이메일 정보가 필요해요';
-
-type LogoutPending = { state: string; willBeDeletedAt: string };
-
-const readLogoutPending = (): LogoutPending | null => {
-  const raw = sessionStorage.getItem(LOGOUT_STORAGE_KEY);
-  sessionStorage.removeItem(LOGOUT_STORAGE_KEY);
-  if (!raw) return null;
-  try {
-    const parsed = JSON.parse(raw) as Partial<LogoutPending>;
-    return typeof parsed.state === 'string' && typeof parsed.willBeDeletedAt === 'string'
-      ? { state: parsed.state, willBeDeletedAt: parsed.willBeDeletedAt }
-      : null;
-  } catch {
-    return null;
-  }
-};
 
 const formatDate = (iso?: string) => {
   if (!iso) return '';
@@ -91,17 +74,13 @@ export default function AccountDeleteClient() {
 
   /**
    * 공용 PC 대비 선택지. 우리 세션은 서버가 이미 모두 끊었고, 이건 브라우저의 카카오계정 로그인까지 끊는다.
-   * 카카오가 state만 붙여 KAKAO_LOGOUT_REDIRECT_URI로 돌려보내면 완료 화면을 복원한다.
+   * 끝나면 카카오가 사이트 홈(KAKAO_LOGOUT_REDIRECT_URI)으로 보낸다.
    */
-  const logoutKakao = (willBeDeletedAt: string) => {
-    const state = crypto.randomUUID();
-    const pending: LogoutPending = { state, willBeDeletedAt };
-    sessionStorage.setItem(LOGOUT_STORAGE_KEY, JSON.stringify(pending));
+  const logoutKakao = () => {
     const url = new URL(KAKAO_LOGOUT_URL);
     url.search = new URLSearchParams({
       client_id: KAKAO_REST_API_KEY,
       logout_redirect_uri: KAKAO_LOGOUT_REDIRECT_URI,
-      state,
     }).toString();
     window.location.assign(url);
   };
@@ -148,22 +127,7 @@ export default function AccountDeleteClient() {
     const code = params.get('code');
     const returnedState = params.get('state');
     const error = params.get('error');
-    if (!code && !error) {
-      // 카카오계정 로그아웃 복귀는 state만 붙어 온다
-      if (!returnedState) return;
-      handledReturn.current = true;
-      window.history.replaceState(null, '', window.location.pathname);
-      const pending = readLogoutPending();
-      // 대조에 실패하면 복원할 정보가 없으니 처음 화면에 둔다
-      if (pending?.state === returnedState) {
-        setScreen({
-          kind: 'done',
-          willBeDeletedAt: pending.willBeDeletedAt,
-          kakaoLoggedOut: true,
-        });
-      }
-      return;
-    }
+    if (!code && !error) return;
 
     handledReturn.current = true;
     // 🔴 교환 전에 쿼리를 통째로 지운다. code·state·error가 URL에 남으면
@@ -338,16 +302,14 @@ export default function AccountDeleteClient() {
             <b>{formatDate(screen.willBeDeletedAt)}</b>에 탈퇴가 완료되고 카카오 연결도 해제됩니다.
             그 전까지 앱에서 다시 로그인하면 복구할 수 있어요.
           </p>
-          {screen.kakaoLoggedOut ? (
-            <p>이 브라우저의 카카오 계정에서도 로그아웃했어요.</p>
-          ) : KAKAO_REST_API_KEY ? (
+          {KAKAO_REST_API_KEY ? (
             <>
               <p>여러 사람이 함께 쓰는 기기라면 카카오 계정에서도 로그아웃해 주세요.</p>
               <div className={styles.row}>
                 <button
                   type="button"
                   className={`${styles.rowBtn} ${styles.outline}`}
-                  onClick={() => logoutKakao(screen.willBeDeletedAt)}
+                  onClick={logoutKakao}
                 >
                   카카오 계정에서도 로그아웃
                 </button>

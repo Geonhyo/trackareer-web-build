@@ -27,18 +27,20 @@ export const KAKAO_REDIRECT_URI =
 export const KAKAO_REST_API_KEY = process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY ?? '';
 export const KAKAO_LOGOUT_URL = 'https://kauth.kakao.com/oauth/logout';
 /**
- * 🔴 로그아웃 복귀 주소도 로그인과 같은 /account/delete를 쓴다.
- * 카카오 콘솔 '로그아웃 리다이렉트 URI'에 KAKAO_REDIRECT_URI와 같은 문자열로 등록해야 한다.
+ * 🔴 로그아웃이 끝나면 사이트 홈으로 보낸다. 카카오 콘솔 '로그아웃 리다이렉트 URI'에 이 문자열 그대로 등록한다
+ * (운영 https://www.trackareer.com, DEV http://localhost:3000 — 끝 슬래시 없음).
+ * SITE_URL은 로컬에서도 운영값으로 고정이라, 환경별로 갈리는 로그인 리다이렉트의 origin을 쓴다.
+ * env가 빈 문자열이면 new URL이 모듈 로드 중에 던져 페이지가 통째로 죽으므로 가드한다.
  */
-export const KAKAO_LOGOUT_REDIRECT_URI = KAKAO_REDIRECT_URI;
+export const KAKAO_LOGOUT_REDIRECT_URI = URL.canParse(KAKAO_REDIRECT_URI)
+  ? new URL(KAKAO_REDIRECT_URI).origin
+  : 'https://www.trackareer.com';
 
 export const APP_API_URL = (
   process.env.NEXT_PUBLIC_APP_API_URL ?? 'https://app-api.trackareer.com'
 ).replace(/\/$/, '');
 
 export const STATE_STORAGE_KEY = 'trackareer.account-delete.state';
-/** 카카오 로그아웃 왕복 동안 state와 삭제 예정일을 보관한다(복귀 후 완료 화면 복원용) */
-export const LOGOUT_STORAGE_KEY = 'trackareer.account-delete.logout';
 
 /**
  * 앱 2.0 계정 삭제 화면(AccountDeleteScreen)과 같은 여섯 개 · 같은 문구.

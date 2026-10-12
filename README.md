@@ -92,7 +92,7 @@ src/
 - **마감 지난 공고도 표시·저장 가능**하다(회고적 기록 지원 방침).
 - **관심 저장 = 앱의 개인 공고 생성.** 웹 전용 북마크가 아니다. 앱에서 그 공고를 지우면 웹의 별도 풀린다.
 - `/account/delete` 경로와 `NEXT_PUBLIC_KAKAO_REDIRECT_URI`는 **카카오 콘솔 등록값·서버 `KAKAO_WEB_REDIRECT_URI`와 문자열이 정확히 같아야 한다.** 경로를 바꾸면 계정 삭제 로그인이 깨지고 Google Play 요건도 깨진다.
-- 계정 삭제 완료 화면의 '카카오 계정에서도 로그아웃'은 같은 `/account/delete`로 돌아온다. 카카오 콘솔 **로그아웃 리다이렉트 URI**에도 `NEXT_PUBLIC_KAKAO_REDIRECT_URI`와 같은 값을 등록하고, `NEXT_PUBLIC_KAKAO_REST_API_KEY`(로그아웃 요청은 REST API 키만 받는다)를 넣는다. 키가 비면 버튼이 숨는다. 운영·DEV 카카오 앱 키를 섞지 않는다.
+- 계정 삭제 완료 화면의 '카카오 계정에서도 로그아웃'은 끝나면 사이트 홈(`NEXT_PUBLIC_KAKAO_REDIRECT_URI`의 origin, 끝 슬래시 없음)으로 돌아온다. 카카오 콘솔 **로그아웃 리다이렉트 URI**에 그 값(운영 `https://www.trackareer.com`, DEV `http://localhost:3000`)을 등록하고, `NEXT_PUBLIC_KAKAO_REST_API_KEY`(로그아웃 요청은 REST API 키만 받는다)를 넣는다. 키가 비면 버튼이 숨는다. 운영·DEV 카카오 앱 키를 섞지 않는다.
 - **계정 삭제 페이지는 지금 카카오 계정만 받는다.** Apple 계정은 앱에서 삭제하도록 안내한다(메일 안내는 하지 않는다). 웹 정식 오픈 때 웹 Apple 로그인(Services ID)을 붙이면서 여기도 Apple을 받는다. 탈퇴 흐름(사유 하나 · 선택, 삭제 먼저 → 사유 저장)과 문구는 앱 2.0 계정 삭제 화면과 맞추고, 안내는 "30일 보관 → 탈퇴 완료, 그 안에 앱에서 다시 로그인하면 복구"까지만 한다(익명화 세부는 처리방침에 맡김).
 - 공고 원문 HTML은 서버 컴포넌트에서 `sanitizeContentHtml()`을 거친 것만 렌더한다.
 
