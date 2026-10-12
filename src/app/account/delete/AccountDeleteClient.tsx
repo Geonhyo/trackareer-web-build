@@ -89,8 +89,7 @@ export default function AccountDeleteClient() {
     if (failure.code === 'EMAIL_REGISTERED_WITH_OTHER_PROVIDER') {
       notice(
         'Apple로 가입된 계정이에요',
-        'Apple 계정은 앱의 마이페이지 > 계정 관리 > 계정 삭제에서 삭제하시거나 아래 메일로 요청해 주세요.',
-        'email',
+        'Apple 계정은 앱의 마이페이지 > 계정 관리 > 계정 삭제에서 삭제해 주세요.',
       );
       return;
     }
@@ -157,8 +156,7 @@ export default function AccountDeleteClient() {
         if (result.isNewUser) {
           notice(
             '가입 이력이 없어요',
-            '이 카카오 계정으로 가입한 내역을 찾지 못했어요. 다른 카카오 계정으로 가입하셨다면 그 계정으로 로그인해 주세요. Apple로 가입하셨다면 앱에서 삭제하시거나 아래 메일로 요청해 주세요.',
-            'email',
+            '이 카카오 계정으로 가입한 내역을 찾지 못했어요. 다른 카카오 계정으로 가입하셨다면 그 계정으로 로그인해 주세요. Apple로 가입하셨다면 앱의 마이페이지 > 계정 관리 > 계정 삭제에서 삭제해 주세요.',
           );
           return;
         }
