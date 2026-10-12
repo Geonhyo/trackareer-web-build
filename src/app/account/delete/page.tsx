@@ -64,7 +64,7 @@ export default function AccountDeletePage() {
       <section className={styles.foot}>
         <p>
           <b>Apple로 가입하신 분</b>은 아직 이 페이지에서 삭제할 수 없습니다. 앱의 마이페이지 &gt;
-          계정 관리 &gt; 계정 삭제에서 삭제하시거나 아래 메일로 요청해 주세요.
+          계정 관리 &gt; 계정 삭제에서 삭제해 주세요.
         </p>
         <p>
           문의·삭제 요청: <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a>
