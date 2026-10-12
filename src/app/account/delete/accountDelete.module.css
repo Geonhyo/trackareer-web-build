@@ -28,11 +28,6 @@
   font-weight: var(--bold);
   letter-spacing: -0.03em;
 }
-.head p {
-  font-size: var(--t3);
-  line-height: var(--lh6);
-  color: var(--fg-muted);
-}
 
 .box {
   display: flex;
