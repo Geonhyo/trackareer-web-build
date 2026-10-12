@@ -18,6 +18,7 @@ import {
 } from '@/features/account/constants';
 import {
   exchangeCode,
+  logout,
   requestDeletion,
   saveWithdrawalReason,
   type ApiFailure,
@@ -28,7 +29,7 @@ import styles from './accountDelete.module.css';
 type Screen =
   | { kind: 'idle' }
   | { kind: 'exchanging' }
-  | { kind: 'reasons'; accessToken: string; account: string }
+  | { kind: 'reasons'; accessToken: string; refreshToken: string; account: string }
   | { kind: 'done'; willBeDeletedAt: string }
   | { kind: 'pending'; willBeDeletedAt?: string }
   | { kind: 'notice'; title: string; message: string; retry: 'kakao' | 'email' };
@@ -179,6 +180,7 @@ export default function AccountDeleteClient() {
         setScreen({
           kind: 'reasons',
           accessToken: result.accessToken,
+          refreshToken: result.refreshToken,
           account: result.user?.email ?? result.user?.nickname ?? '',
         });
       })
@@ -223,6 +225,26 @@ export default function AccountDeleteClient() {
     } finally {
       setSubmitting(false);
     }
+  };
+
+  /**
+   * 삭제하지 않고 나가기. 이 페이지에서 로그아웃하는 이유는 기기를 떠나는 것뿐이라
+   * 서버 세션과 브라우저의 카카오계정 로그인을 함께 끊는다(카카오 REST 키가 없으면 서버 세션만).
+   */
+  const onLeaveWithoutDeleting = async () => {
+    if (screen.kind !== 'reasons') return;
+    setSubmitting(true);
+    // 실패해도 세션은 만료로 정리되고 refreshToken은 이 화면 밖에 남지 않는다
+    await logout(screen.accessToken, screen.refreshToken).catch(() => undefined);
+    if (KAKAO_REST_API_KEY) {
+      logoutKakao();
+      return;
+    }
+    setReason(null);
+    setEtcText('');
+    setFormError(null);
+    setSubmitting(false);
+    setScreen({ kind: 'idle' });
   };
 
   const mailTo = `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent('계정 삭제 요청')}`;
@@ -354,9 +376,24 @@ export default function AccountDeleteClient() {
 
           {formError ? <p className={styles.error}>{formError}</p> : null}
 
-          <button type="button" className={styles.danger} onClick={() => setConfirming(true)}>
+          <button
+            type="button"
+            className={styles.danger}
+            disabled={submitting}
+            onClick={() => setConfirming(true)}
+          >
             계정 삭제 요청
           </button>
+          <div className={styles.row}>
+            <button
+              type="button"
+              className={`${styles.rowBtn} ${styles.outline}`}
+              disabled={submitting}
+              onClick={() => void onLeaveWithoutDeleting()}
+            >
+              삭제하지 않고 로그아웃
+            </button>
+          </div>
         </div>
       ) : null}
 
