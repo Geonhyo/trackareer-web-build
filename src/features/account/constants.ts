@@ -19,6 +19,23 @@ export const KAKAO_JS_KEY = process.env.NEXT_PUBLIC_KAKAO_JS_KEY ?? '';
 export const KAKAO_REDIRECT_URI =
   process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI ?? `https://www.trackareer.com${ACCOUNT_DELETE_PATH}`;
 
+/**
+ * '카카오계정과 함께 로그아웃'(kauth /oauth/logout)은 client_id로 REST API 키만 받는다(JS 키 불가).
+ * 브라우저 리다이렉트로만 호출되는 값이라 공개돼도 된다 — 토큰 교환은 서버의 client secret이 막는다.
+ * 비어 있으면 로그아웃 버튼을 숨긴다.
+ */
+export const KAKAO_REST_API_KEY = process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY ?? '';
+export const KAKAO_LOGOUT_URL = 'https://kauth.kakao.com/oauth/logout';
+/**
+ * 🔴 로그아웃이 끝나면 사이트 홈으로 보낸다. 카카오 콘솔 '로그아웃 리다이렉트 URI'에 이 문자열 그대로 등록한다
+ * (운영 https://www.trackareer.com, DEV http://localhost:3000 — 끝 슬래시 없음).
+ * SITE_URL은 로컬에서도 운영값으로 고정이라, 환경별로 갈리는 로그인 리다이렉트의 origin을 쓴다.
+ * env가 빈 문자열이면 new URL이 모듈 로드 중에 던져 페이지가 통째로 죽으므로 가드한다.
+ */
+export const KAKAO_LOGOUT_REDIRECT_URI = URL.canParse(KAKAO_REDIRECT_URI)
+  ? new URL(KAKAO_REDIRECT_URI).origin
+  : 'https://www.trackareer.com';
+
 export const APP_API_URL = (
   process.env.NEXT_PUBLIC_APP_API_URL ?? 'https://app-api.trackareer.com'
 ).replace(/\/$/, '');

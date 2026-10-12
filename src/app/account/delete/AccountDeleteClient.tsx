@@ -6,7 +6,10 @@ import {
   ETC_MAX_LENGTH,
   ETC_REASON,
   KAKAO_JS_KEY,
+  KAKAO_LOGOUT_REDIRECT_URI,
+  KAKAO_LOGOUT_URL,
   KAKAO_REDIRECT_URI,
+  KAKAO_REST_API_KEY,
   KAKAO_SDK_INTEGRITY,
   KAKAO_SDK_SRC,
   STATE_STORAGE_KEY,
@@ -15,6 +18,7 @@ import {
 } from '@/features/account/constants';
 import {
   exchangeCode,
+  logout,
   requestDeletion,
   saveWithdrawalReason,
   type ApiFailure,
@@ -25,7 +29,7 @@ import styles from './accountDelete.module.css';
 type Screen =
   | { kind: 'idle' }
   | { kind: 'exchanging' }
-  | { kind: 'reasons'; accessToken: string; account: string }
+  | { kind: 'reasons'; accessToken: string; refreshToken: string; account: string }
   | { kind: 'done'; willBeDeletedAt: string }
   | { kind: 'pending'; willBeDeletedAt?: string }
   | { kind: 'notice'; title: string; message: string; retry: 'kakao' | 'email' };
@@ -67,6 +71,19 @@ export default function AccountDeleteClient() {
     const state = crypto.randomUUID();
     sessionStorage.setItem(STATE_STORAGE_KEY, state);
     kakao.Auth.authorize({ redirectUri: KAKAO_REDIRECT_URI, state, ...(scope ? { scope } : {}) });
+  };
+
+  /**
+   * 공용 PC 대비 선택지. 우리 세션은 서버가 이미 모두 끊었고, 이건 브라우저의 카카오계정 로그인까지 끊는다.
+   * 끝나면 카카오가 사이트 홈(KAKAO_LOGOUT_REDIRECT_URI)으로 보낸다.
+   */
+  const logoutKakao = () => {
+    const url = new URL(KAKAO_LOGOUT_URL);
+    url.search = new URLSearchParams({
+      client_id: KAKAO_REST_API_KEY,
+      logout_redirect_uri: KAKAO_LOGOUT_REDIRECT_URI,
+    }).toString();
+    window.location.assign(url);
   };
 
   const onFailure = (failure: ApiFailure) => {
@@ -163,6 +180,7 @@ export default function AccountDeleteClient() {
         setScreen({
           kind: 'reasons',
           accessToken: result.accessToken,
+          refreshToken: result.refreshToken,
           account: result.user?.email ?? result.user?.nickname ?? '',
         });
       })
@@ -207,6 +225,26 @@ export default function AccountDeleteClient() {
     } finally {
       setSubmitting(false);
     }
+  };
+
+  /**
+   * 삭제하지 않고 나가기. 이 페이지에서 로그아웃하는 이유는 기기를 떠나는 것뿐이라
+   * 서버 세션과 브라우저의 카카오계정 로그인을 함께 끊는다(카카오 REST 키가 없으면 서버 세션만).
+   */
+  const onLeaveWithoutDeleting = async () => {
+    if (screen.kind !== 'reasons') return;
+    setSubmitting(true);
+    // 실패해도 세션은 만료로 정리되고 refreshToken은 이 화면 밖에 남지 않는다
+    await logout(screen.accessToken, screen.refreshToken).catch(() => undefined);
+    if (KAKAO_REST_API_KEY) {
+      logoutKakao();
+      return;
+    }
+    setReason(null);
+    setEtcText('');
+    setFormError(null);
+    setSubmitting(false);
+    setScreen({ kind: 'idle' });
   };
 
   const mailTo = `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent('계정 삭제 요청')}`;
@@ -286,6 +324,20 @@ export default function AccountDeleteClient() {
             <b>{formatDate(screen.willBeDeletedAt)}</b>에 탈퇴가 완료되고 카카오 연결도 해제됩니다.
             그 전까지 앱에서 다시 로그인하면 복구할 수 있어요.
           </p>
+          {KAKAO_REST_API_KEY ? (
+            <>
+              <p>여러 사람이 함께 쓰는 기기라면 카카오 계정에서도 로그아웃해 주세요.</p>
+              <div className={styles.row}>
+                <button
+                  type="button"
+                  className={`${styles.rowBtn} ${styles.outline}`}
+                  onClick={logoutKakao}
+                >
+                  카카오 계정에서도 로그아웃
+                </button>
+              </div>
+            </>
+          ) : null}
         </div>
       ) : null}
 
@@ -324,9 +376,24 @@ export default function AccountDeleteClient() {
 
           {formError ? <p className={styles.error}>{formError}</p> : null}
 
-          <button type="button" className={styles.danger} onClick={() => setConfirming(true)}>
+          <button
+            type="button"
+            className={styles.danger}
+            disabled={submitting}
+            onClick={() => setConfirming(true)}
+          >
             계정 삭제 요청
           </button>
+          <div className={styles.row}>
+            <button
+              type="button"
+              className={`${styles.rowBtn} ${styles.outline}`}
+              disabled={submitting}
+              onClick={() => void onLeaveWithoutDeleting()}
+            >
+              삭제하지 않고 로그아웃
+            </button>
+          </div>
         </div>
       ) : null}
 
